@@ -51,3 +51,13 @@ python -m notesage.search data\index "how do plants make food?" -k 3
 
 Each result shows its similarity score, source file and page, which is what
 the answer step will use for citations.
+
+## Evaluate retrieval
+Measure how often the right chunk is found for a set of questions:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m notesage.evaluate docs\sample_notes.md --chunk-size 300 --overlap 50
+```
+
+Results for different chunk sizes are in `docs/EVALUATION.md`.
