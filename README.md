@@ -4,7 +4,7 @@ A question-answering assistant for your own notes. Upload PDFs or text files,
 ask questions in plain language, and get answers with citations to the source.
 
 ## Status
-🚧 In development. Currently in Sprint 1, step 3: Chunking with overlap (Issue #3).
+🚧 In development. Currently in Sprint 1.
 
 ## Planned features
 - Document ingestion (PDF and text)
