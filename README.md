@@ -28,3 +28,26 @@ python -m notesage.ingest path\to\file.pdf --chunk-size 500 --overlap 50
 
 Each chunk keeps its source file, page number and a unique id, which later
 stages use to cite where an answer came from.
+
+## Build a search index
+Embed your documents and save an index to disk:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m notesage.build_index notes.pdf more_notes.md --out data\index
+```
+
+The index is stored as `index.faiss` (vectors) plus `chunks.json` (text, source
+file and page for each vector). Both live in `data/`, which is git-ignored.
+The first run downloads the embedding model (about 90 MB).
+
+## Search your notes
+Query a saved index in plain language:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m notesage.search data\index "how do plants make food?" -k 3
+```
+
+Each result shows its similarity score, source file and page, which is what
+the answer step will use for citations.
