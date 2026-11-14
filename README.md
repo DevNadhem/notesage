@@ -4,8 +4,8 @@ A question-answering assistant for your own notes. Upload PDFs or text files,
 ask questions in plain language, and get answers with citations to the source.
 
 ## Status
-🚧 In development. Sprint 1 (ingestion) is complete: loading and chunking
-PDF, text and Markdown files. Next up: Sprint 2 (retrieval).
+🚧 In development. Sprint 2 (retrieval) is complete: documents can be embedded,
+indexed, searched and evaluated. Next up: Sprint 3 (answer generation).
 
 ## Planned features
 - Document ingestion (PDF and text)
@@ -51,3 +51,13 @@ python -m notesage.search data\index "how do plants make food?" -k 3
 
 Each result shows its similarity score, source file and page, which is what
 the answer step will use for citations.
+
+## Evaluate retrieval
+Measure how often the right chunk is found for a set of questions:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m notesage.evaluate docs\sample_notes.md --chunk-size 300 --overlap 50
+```
+
+Results for different chunk sizes are in `docs/EVALUATION.md`.
