@@ -1,0 +1,16 @@
+[
+  {"question": "How do plants make food?", "source": "sample_notes.md", "answer_contains": "glucose"},
+  {"question": "What lets leaves absorb light?", "source": "sample_notes.md", "answer_contains": "chlorophyll"},
+  {"question": "When did the French Revolution start?", "source": "sample_notes.md", "answer_contains": "1789"},
+  {"question": "What happened to Louis XVI?", "source": "sample_notes.md", "answer_contains": "executed"},
+  {"question": "What is the difference between lists and tuples?", "source": "sample_notes.md", "answer_contains": "immutable"},
+  {"question": "Why use a virtual environment?", "source": "sample_notes.md", "answer_contains": "dependencies"},
+  {"question": "What is overfitting and how do I fix it?", "source": "sample_notes.md", "answer_contains": "regularization"},
+  {"question": "What is compound interest?", "source": "sample_notes.md", "answer_contains": "previously earned interest"},
+  {"question": "How big should an emergency fund be?", "source": "sample_notes.md", "answer_contains": "three to six months"},
+  {"question": "How many chambers does the heart have?", "source": "sample_notes.md", "answer_contains": "four chambers"},
+  {"question": "What carries oxygen in the blood?", "source": "sample_notes.md", "answer_contains": "hemoglobin"},
+  {"question": "What does DNS do?", "source": "sample_notes.md", "answer_contains": "ip addresses"},
+  {"question": "How long does sunlight take to reach Earth?", "source": "sample_notes.md", "answer_contains": "eight minutes"},
+  {"question": "Which planet is the largest?", "source": "sample_notes.md", "answer_contains": "jupiter"}
+]
