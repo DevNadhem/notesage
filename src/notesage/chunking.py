@@ -41,3 +41,21 @@ def chunk_text(text, chunk_size=500, overlap=50):
             break
         start += step
     return chunks
+
+def chunk_document(path, chunk_size=500, overlap=50):
+    """Load a document and return a list of Chunk objects."""
+    source = Path(path).name
+    chunks = []
+    index = 0
+    for page, text in load_document(path):
+        for piece in chunk_text(text, chunk_size, overlap):
+            chunks.append(
+                Chunk(
+                    text=piece,
+                    source=source,
+                    page=page,
+                    chunk_id=f"{source}-p{page}-c{index}",
+                )
+            )
+            index += 1
+    return chunks
