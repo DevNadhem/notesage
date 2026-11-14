@@ -1,5 +1,5 @@
 import json
-from dataclasses import asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 import faiss
@@ -8,6 +8,13 @@ from .chunking import Chunk
 
 INDEX_FILE = "index.faiss"
 META_FILE = "chunks.json"
+
+@dataclass(frozen=True)
+class SearchResult:
+    """A chunk returned by a search, with its cosine similarity score."""
+
+    chunk: Chunk
+    score: float
 
 
 class VectorIndex:
@@ -62,3 +69,16 @@ class VectorIndex:
                 "the saved files do not match"
             )
         return cls(index, chunks)
+
+    def search(self, query, embedder, k=3):
+        """Return up to `k` SearchResult objects, best match first."""
+        if k <= 0:
+            raise ValueError("k must be positive")
+        k = min(k, len(self.chunks))
+        scores, ids = self.index.search(embedder.embed_query(query), k)
+        results = []
+        for score, i in zip(scores[0], ids[0]):
+            if i == -1:  # FAISS pads with -1 when it has fewer hits
+                continue
+            results.append(SearchResult(self.chunks[i], float(score)))
+        return results
