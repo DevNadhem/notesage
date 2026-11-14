@@ -4,8 +4,8 @@ A question-answering assistant for your own notes. Upload PDFs or text files,
 ask questions in plain language, and get answers with citations to the source.
 
 ## Status
-🚧 In development. Sprint 1 (ingestion) is complete: loading and chunking
-PDF, text and Markdown files. Next up: Sprint 2 (retrieval).
+🚧 In development. Sprint 2 (retrieval) is complete: documents can be embedded,
+indexed, searched and evaluated. Next up: Sprint 3 (answer generation).
 
 ## Planned features
 - Document ingestion (PDF and text)

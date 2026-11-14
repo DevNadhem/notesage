@@ -1,19 +1,14 @@
 # Changelog
 
-## [Unreleased] - Sprint 2: Retrieval
+## [0.2.0] - Sprint 2: Retrieval
 ### Added
 - `Embedder` class wrapping sentence-transformers (`all-MiniLM-L6-v2`) with lazy loading and normalized output
-## Build a search index
-Embed your documents and save an index to disk:
-
-```powershell
-$env:PYTHONPATH = "src"
-python -m notesage.build_index notes.pdf more_notes.md --out data\index
-```
-
-The index is stored as `index.faiss` (vectors) plus `chunks.json` (text, source
-file and page for each vector). Both live in `data/`, which is git-ignored.
-The first run downloads the embedding model (about 90 MB).
+- `VectorIndex` (FAISS inner-product index) with chunk metadata, plus `save`/`load` persistence
+- `python -m notesage.build_index` CLI to build and save an index from documents
+- `VectorIndex.search` returns the top-k chunks with cosine similarity scores, capped at the index size
+- `python -m notesage.search` CLI to query a saved index
+- `python -m notesage.evaluate` reports hit@1 and hit@3 on a question set, with sample notes and questions in `docs/`
+- Retrieval evaluation results in `docs/EVALUATION.md`
 
 ## [0.1.0] - Sprint 1: Ingestion
 ### Added
