@@ -33,3 +33,32 @@ class VectorIndex:
 
     def __len__(self):
         return len(self.chunks)
+
+    def save(self, directory):
+        """Write the FAISS index and chunk metadata into `directory`."""
+        directory = Path(directory)
+        directory.mkdir(parents=True, exist_ok=True)
+        faiss.write_index(self.index, str(directory / INDEX_FILE))
+        data = [asdict(chunk) for chunk in self.chunks]
+        (directory / META_FILE).write_text(
+            json.dumps(data, indent=2), encoding="utf-8"
+        )
+
+    @classmethod
+    def load(cls, directory):
+        """Load an index previously written by `save`."""
+        directory = Path(directory)
+        index_path = directory / INDEX_FILE
+        meta_path = directory / META_FILE
+        if not index_path.exists() or not meta_path.exists():
+            raise FileNotFoundError(f"No saved index found in: {directory}")
+
+        index = faiss.read_index(str(index_path))
+        raw = json.loads(meta_path.read_text(encoding="utf-8"))
+        chunks = [Chunk(**item) for item in raw]
+        if index.ntotal != len(chunks):
+            raise ValueError(
+                f"Index has {index.ntotal} vectors but {len(chunks)} chunks; "
+                "the saved files do not match"
+            )
+        return cls(index, chunks)
