@@ -15,4 +15,4 @@ ask questions in plain language, and get answers with citations to the source.
 ## Supported files
 NoteSage currently loads `.pdf`, `.txt` and `.md` files. Each document is
 returned as a list of `(page_number, text)` pairs, so later stages can cite
-the exact page a answer came from. Plain-text files count as a single page.
+the exact page an answer came from. Plain-text files count as a single page.
