@@ -34,6 +34,7 @@ PROMPT_TEMPLATE = """You answer questions using only the notes provided below.
 
 Rules:
 - Use only the information in the notes. Do not use outside knowledge.
+- The question may be worded differently than the notes (synonyms, paraphrases). Match by meaning, not exact words. If any note contains the answer, give it.
 - Cite the notes you used by number, like [1] or [2].
 - If the notes do not contain the answer, reply exactly: {not_found}
 
@@ -43,7 +44,6 @@ Notes:
 Question: {question}
 
 Answer:"""
-
 
 def build_prompt(question, results, max_context_chars=DEFAULT_MAX_CONTEXT_CHARS):
     """Build the full prompt for the LLM from a question and search results."""
