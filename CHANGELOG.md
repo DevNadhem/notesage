@@ -4,6 +4,8 @@
 ### Added
 - Streamlit app: upload notes, build an index, chat with cited answers
 - Service layer that builds an index from uploaded files and reports skipped or unreadable ones
+- Ollama health check: the app shows whether the server is running and the model is installed, with the exact command to fix it
+- Empty questions are rejected and oversized uploads (over 20 MB) are skipped with a message
 
 ## [0.3.0] - Sprint 3: Generation
 ### Added

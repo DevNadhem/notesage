@@ -89,3 +89,9 @@ streamlit run app.py
 ```
 
 Upload your notes in the sidebar, click **Build index**, and ask questions.
+
+## Troubleshooting
+- **"Ollama is not running"**: start the Ollama app, then reload the page.
+- **"Model 'llama3.2' is not installed"**: run `ollama pull llama3.2`.
+- **A file was skipped**: the app lists the reason (unsupported type, scanned PDF with no text, unreadable, or too large).
+- **"I couldn't find that in your notes"**: the best matching passage scored below the relevance threshold. Try rephrasing, or ask one question at a time.
