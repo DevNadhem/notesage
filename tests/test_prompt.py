@@ -68,3 +68,7 @@ def test_empty_question_raises():
 def test_empty_results_raise():
     with pytest.raises(ValueError):
         build_prompt("What is X?", [])
+
+def test_prompt_allows_paraphrased_questions():
+    prompt = build_prompt("What is X?", make_results(["note"]))
+    assert "Match by meaning" in prompt
