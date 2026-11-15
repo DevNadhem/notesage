@@ -2,9 +2,11 @@ import io
 import json
 import urllib.error
 
+
 import numpy as np
 import pytest
 
+from notesage.prompt import NOT_FOUND_MESSAGE
 from notesage.answer import Answer, answer_question
 from notesage.chunking import Chunk
 from notesage.llm import LLMError, OllamaClient
@@ -47,12 +49,12 @@ def make_index():
     return VectorIndex.build(chunks, FakeEmbedder())
 
 
-def test_answer_returns_model_text_and_sources():
+def test_answer_returns_model_text_and_cited_source():
     result = answer_question("cat", make_index(), FakeEmbedder(), FakeLLM(), k=2)
     assert isinstance(result, Answer)
+    assert result.found
     assert result.text == "The cat sat [1]."
-    assert result.sources[0].chunk.text == "the cat sat"
-    assert len(result.sources) == 2
+    assert [s.chunk.text for s in result.sources] == ["the cat sat"]
 
 
 def test_prompt_sent_to_model_contains_retrieved_chunk_and_question():
@@ -103,3 +105,39 @@ def test_ollama_client_rejects_empty_answer(monkeypatch):
     )
     with pytest.raises(LLMError):
         OllamaClient().generate("hi")
+
+
+def test_out_of_scope_question_skips_the_model():
+    llm = FakeLLM()
+    result = answer_question("zebra", make_index(), FakeEmbedder(), llm)
+    assert result.text == NOT_FOUND_MESSAGE
+    assert result.sources == []
+    assert not result.found
+    assert llm.prompts == []
+
+
+def test_model_not_found_reply_returns_no_sources():
+    llm = FakeLLM(reply=NOT_FOUND_MESSAGE)
+    result = answer_question("cat", make_index(), FakeEmbedder(), llm)
+    assert not result.found
+    assert result.sources == []
+
+
+def test_only_cited_sources_are_returned():
+    result = answer_question(
+        "cat dog", make_index(), FakeEmbedder(), FakeLLM("Answer [1]."), k=2
+    )
+    assert len(result.sources) == 1
+
+
+def test_uncited_answer_falls_back_to_all_relevant_sources():
+    result = answer_question(
+        "cat dog", make_index(), FakeEmbedder(), FakeLLM("No numbers here."), k=2
+    )
+    assert len(result.sources) == 2
+
+
+def test_min_score_is_configurable():
+    llm = FakeLLM()
+    answer_question("zebra", make_index(), FakeEmbedder(), llm, min_score=0.0)
+    assert len(llm.prompts) == 1
