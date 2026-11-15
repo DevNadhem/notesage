@@ -47,3 +47,22 @@ class OllamaClient:
         if not text:
             raise LLMError("Ollama returned an empty answer")
         return text
+
+    def check(self):
+        """Raise LLMError with setup help unless the server is up and has the model."""
+        request = urllib.request.Request(f"{self.base_url}/api/tags")
+        try:
+            with urllib.request.urlopen(request, timeout=5) as response:
+                body = json.loads(response.read().decode("utf-8"))
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            raise LLMError(
+                f"Ollama is not running at {self.base_url}. "
+                "Start the Ollama app and try again."
+            ) from exc
+
+        names = [m.get("name", "") for m in body.get("models", [])]
+        if not any(n == self.model or n.startswith(f"{self.model}:") for n in names):
+            raise LLMError(
+                f"Model '{self.model}' is not installed. "
+                f"Run: ollama pull {self.model}"
+            )
