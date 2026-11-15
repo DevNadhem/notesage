@@ -42,3 +42,9 @@ def test_corrupt_pdf_is_skipped():
     )
     assert len(index) == 1
     assert any("bad.pdf" in s for s in skipped)
+
+
+def test_oversized_file_is_skipped(monkeypatch):
+    monkeypatch.setattr("notesage.service.MAX_FILE_MB", 0)
+    with pytest.raises(NoteSageError, match="larger than"):
+        build_index_from_uploads([("big.txt", b"some text")], FakeEmbedder())
