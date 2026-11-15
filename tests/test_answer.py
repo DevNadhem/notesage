@@ -141,3 +141,29 @@ def test_min_score_is_configurable():
     llm = FakeLLM()
     answer_question("zebra", make_index(), FakeEmbedder(), llm, min_score=0.0)
     assert len(llm.prompts) == 1
+
+
+def test_check_passes_when_model_is_installed(monkeypatch):
+    body = json.dumps({"models": [{"name": "llama3.2:latest"}]}).encode("utf-8")
+    monkeypatch.setattr(
+        "urllib.request.urlopen", lambda req, timeout=None: FakeResponse(body)
+    )
+    OllamaClient(model="llama3.2").check()
+
+
+def test_check_reports_missing_model(monkeypatch):
+    body = json.dumps({"models": [{"name": "mistral:latest"}]}).encode("utf-8")
+    monkeypatch.setattr(
+        "urllib.request.urlopen", lambda req, timeout=None: FakeResponse(body)
+    )
+    with pytest.raises(LLMError, match="ollama pull"):
+        OllamaClient(model="llama3.2").check()
+
+
+def test_check_reports_server_down(monkeypatch):
+    def refuse(req, timeout=None):
+        raise urllib.error.URLError("refused")
+
+    monkeypatch.setattr("urllib.request.urlopen", refuse)
+    with pytest.raises(LLMError, match="not running"):
+        OllamaClient().check()
