@@ -89,3 +89,5 @@ streamlit run app.py
 ```
 
 Upload your notes in the sidebar, click **Build index**, and ask questions.
+
+- **"I couldn't find that in your notes" although the answer is there**: small local models can be literal. Try the notes' own wording (for example "chambers" instead of "rooms").
