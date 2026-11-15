@@ -4,6 +4,9 @@
 ### Added
 - Prompt template that numbers retrieved chunks, restricts the model to the notes, asks for citations and defines a fixed "not found" reply
 - Context truncation to a configurable character limit
+- `OllamaClient` for local models via Ollama (standard library only) with clear errors when the server is unreachable
+- `answer_question` pipeline that retrieves chunks, builds the prompt, calls the model and returns the answer with its sources
+- `python -m notesage.ask` CLI
 
 ## [0.2.0] - Sprint 2: Retrieval
 ### Added
