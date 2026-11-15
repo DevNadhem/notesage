@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased] - Sprint 4: UI and polish
+### Added
+- Streamlit app: upload notes, build an index, chat with cited answers
+- Service layer that builds an index from uploaded files and reports skipped or unreadable ones
+
 ## [0.3.0] - Sprint 3: Generation
 ### Added
 - Prompt template that numbers retrieved chunks, restricts the model to the notes, asks for citations and defines a fixed "not found" reply
