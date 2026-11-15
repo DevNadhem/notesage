@@ -61,3 +61,8 @@ python -m notesage.evaluate docs\sample_notes.md --chunk-size 300 --overlap 50
 ```
 
 Results for different chunk sizes are in `docs/EVALUATION.md`.
+
+## How answers are grounded
+The prompt sent to the model lists each retrieved chunk as `[n] (file, page p)`
+and instructs the model to answer only from those notes, cite them by number,
+and reply "I couldn't find that in your notes." when the answer isn't there.

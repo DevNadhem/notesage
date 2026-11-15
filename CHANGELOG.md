@@ -1,5 +1,10 @@
 # Changelog
 
+## [Unreleased] - Sprint 3: Generation
+### Added
+- Prompt template that numbers retrieved chunks, restricts the model to the notes, asks for citations and defines a fixed "not found" reply
+- Context truncation to a configurable character limit
+
 ## [0.2.0] - Sprint 2: Retrieval
 ### Added
 - `Embedder` class wrapping sentence-transformers (`all-MiniLM-L6-v2`) with lazy loading and normalized output
