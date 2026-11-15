@@ -4,8 +4,9 @@ A question-answering assistant for your own notes. Upload PDFs or text files,
 ask questions in plain language, and get answers with citations to the source.
 
 ## Status
-🚧 In development. Sprint 2 (retrieval) is complete: documents can be embedded,
-indexed, searched and evaluated. Next up: Sprint 3 (answer generation).
+🚧 In development. Sprint 3 (generation) is complete: questions are answered from
+your notes with cited sources, and unanswerable questions get a clear "not found".
+Next up: Sprint 4 (web interface and release).
 
 ## Planned features
 - Document ingestion (PDF and text)
