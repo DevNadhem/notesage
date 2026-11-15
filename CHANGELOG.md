@@ -1,12 +1,15 @@
 # Changelog
 
-## [Unreleased] - Sprint 3: Generation
+## [0.3.0] - Sprint 3: Generation
 ### Added
 - Prompt template that numbers retrieved chunks, restricts the model to the notes, asks for citations and defines a fixed "not found" reply
 - Context truncation to a configurable character limit
 - `OllamaClient` for local models via Ollama (standard library only) with clear errors when the server is unreachable
 - `answer_question` pipeline that retrieves chunks, builds the prompt, calls the model and returns the answer with its sources
 - `python -m notesage.ask` CLI
+- "Not found" fallback: questions whose best chunk scores below `MIN_SCORE` never reach the model
+- Answers list only the sources they cite, or all relevant chunks if none are cited
+- `config.py` for retrieval settings and `python -m notesage.calibrate` to choose the threshold from data
 
 ## [0.2.0] - Sprint 2: Retrieval
 ### Added
