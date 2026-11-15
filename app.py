@@ -19,9 +19,21 @@ st.caption("Ask questions about your own notes and get answers with sources.")
 def get_embedder():
     return Embedder()
 
+@st.cache_resource
+def get_llm():
+    return OllamaClient()
 
 with st.sidebar:
     st.header("Your notes")
+    try:
+        get_llm().check()
+    except LLMError as exc:
+        st.error(str(exc))
+        llm_ready = False
+    else:
+        st.caption("✅ Language model ready")
+        llm_ready = True
+        
     uploads = st.file_uploader(
         "Upload PDF, text or Markdown files",
         type=["pdf", "txt", "md"],
@@ -51,7 +63,11 @@ for message in st.session_state.get("messages", []):
         for source in message.get("sources", []):
             st.caption(f"Source: {source}")
 
-question = st.chat_input("Ask a question about your notes")
+question = st.chat_input("Ask a question about your notes", disabled=not llm_ready)
+if question is not None and not question.strip():
+    st.warning("Please type a question.")
+    question = None
+
 if question:
     st.session_state["messages"].append({"role": "user", "text": question})
     with st.chat_message("user"):
@@ -61,7 +77,7 @@ if question:
         with st.spinner("Thinking..."):
             try:
                 result = answer_question(
-                    question, st.session_state["index"], get_embedder(), OllamaClient()
+                    question, st.session_state["index"], get_embedder(), get_llm()
                 )
                 text = result.text
                 sources = [
