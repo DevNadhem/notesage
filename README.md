@@ -79,3 +79,13 @@ Results for different chunk sizes are in `docs/EVALUATION.md`.
 The prompt sent to the model lists each retrieved chunk as `[n] (file, page p)`
 and instructs the model to answer only from those notes, cite them by number,
 and reply "I couldn't find that in your notes." when the answer isn't there.
+
+## Run the web app
+Make sure Ollama is running with `llama3.2` pulled, then:
+
+```powershell
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Upload your notes in the sidebar, click **Build index**, and ask questions.
