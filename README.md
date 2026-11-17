@@ -41,7 +41,7 @@ python -m streamlit run app.py
 ```
 Upload your notes in the sidebar, click **Build index**, and ask questions.
 
-![Not found](docs/screenshots/not-found.png)
+![example notes](docs/screenshots/answer.png)
 
 ## Command-line tools
 ```powershell
