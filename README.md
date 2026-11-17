@@ -4,7 +4,7 @@ Ask questions about your own notes and get answers with citations. Upload PDF,
 text or Markdown files, and NoteSage retrieves the relevant passages and has a
 local language model answer from them, or tells you it couldn't find the answer.
 
-![Answer with a source](docs/screenshots/answer.png)
+![Not found](docs/screenshots/not-found.png)
 
 ## Features
 - Loads PDF, `.txt` and `.md` files, page by page
@@ -41,7 +41,6 @@ python -m streamlit run app.py
 ```
 Upload your notes in the sidebar, click **Build index**, and ask questions.
 
-![Not found](docs/screenshots/not-found.png)
 
 ## Command-line tools
 ```powershell
